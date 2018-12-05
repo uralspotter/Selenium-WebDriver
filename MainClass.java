@@ -27,8 +27,10 @@ public class MainClass {
         System.out.println(driver_chrome.getCurrentUrl());
 //        WebElement link = driver_chrome.findElement(By.xpath("//div[@class='desk-notif-card__card']/a[@class='desk-notif-card__login-enter-expanded']"));
 //        link.click();
-        driver_chrome.findElement(By.xpath("//input[@name='login']")).sendKeys("userLogin");
-        driver_chrome.findElement(By.xpath("//input[@name='passwd']")).sendKeys("userPassword");
+//        driver_chrome.findElement(By.xpath("//input[@name='login']")).sendKeys("userLogin");
+//        driver_chrome.findElement(By.xpath("//input[@name='passwd']")).sendKeys("userPassword");
+        enterText("login", "userLogin");
+        enterText("passwd", "userPassword");
         selectedCheckbox();
         unselectedCheckbox();
         System.out.println(driver_chrome.getTitle());
@@ -37,17 +39,28 @@ public class MainClass {
 //        driver_firefox.quit();
     }
 
+    public static void enterText(String name, String text) {
+        String inputXPath = String.format("//input[@name='%s']", name);
+        System.out.println(inputXPath+ " " + text);
+        driver_chrome.findElement(By.xpath(inputXPath)).sendKeys(text);
+    }
+
     public static void selectedCheckbox() {
-        String cbXpath = "//input[@name='twoweeks']";
-        if (!driver_chrome.findElement(By.xpath(cbXpath)).isSelected()) {
-            driver_chrome.findElement(By.xpath(cbXpath)).click();
+        String cbXpath = "//label[@class='passport-Checkbox']";
+        if (!driver_chrome.findElement(By.xpath(cbXpath + "/input[@name='twoweeks']")).isSelected()) {
+            driver_chrome.findElement(By.xpath(cbXpath + "/span[@class='passport-Checkbox-View']")).click();
         }
     }
 
     public static void unselectedCheckbox() {
-        String cbXpath = "//input[@name='twoweeks']";
-        if (driver_chrome.findElement(By.xpath(cbXpath)).isSelected()) {
-            driver_chrome.findElement(By.xpath(cbXpath)).click();
+        String cbXpath = "//label[@class='passport-Checkbox']";
+        if (driver_chrome.findElement(By.xpath(cbXpath + "/input[@name='twoweeks']")).isSelected()) {
+            driver_chrome.findElement(By.xpath(cbXpath + "/span[@class='passport-Checkbox-View']")).click();
         }
+    }
+
+    public static void selectOption(String listName, String option) {
+        String listXPath = String.format("", listName);
+        String optionXPath = String.format("", option);
     }
 }
